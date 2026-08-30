@@ -7,6 +7,14 @@
         <div class="d-flex justify-content-center align-items-center" style="height:100vh; ">
           <div id="loginbox" class="shadow p-4 bg-white rounded border border-secondary" >
             
+            {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                <div class="alert alert-danger">{{ message }}</div>
+                {% endfor %}
+            {% endif %}
+            {% endwith %}
+
             <h3 class="mb-3 mt-0">Games Database Login:</h3>
             <form action="/login" method="post">
             <div class="mb-3">
