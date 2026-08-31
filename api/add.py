@@ -1,5 +1,6 @@
 from flask import Blueprint, request, session
-from services import db
+#from services import db
+from services.games import add_game
 
 api_add_bp = Blueprint('api_add',__name__)
 
@@ -10,6 +11,6 @@ def api_add():
     console = data['console']
     username = session['username']
 
-    new_id = db.add_game(name,console,username)
+    new_id = add_game(name,console,username)
 
     return{"id":new_id, "name":name, "console":console}

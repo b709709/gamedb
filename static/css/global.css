@@ -34,7 +34,7 @@ background:#d0d0d0;
 }
 
 .game-list {
-  max-height: 400px;      /* controls scroll height */
+  max-height: 80%;      /* controls scroll height */
   overflow-y: auto;       /* enables vertical scrolling */
   border: 1px solid #181717;
   padding: 10px;

@@ -37,7 +37,8 @@ def dashboard():
 
     print ("get games for",session.get("username"))
 
-    games = get_all_games(session["username"])
+    sort = request.args.get("sort","name")
+    games = get_all_games(session["username"],sort)
     print("row count",len(games))
 
     flash("Welcome:" + session.get("username"),"success")
@@ -76,4 +77,5 @@ def login():
     return redirect(url_for("dashboard"))
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(host="0.0.0.0",port=5000,debug=True)
+    #192.168.2.44

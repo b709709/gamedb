@@ -39,12 +39,14 @@ def get_user(username,password):
        print("No user record found.")
        return False
 
-def get_all_games(username):
+def get_all_games(username,sort):
+    
     conn = get_connection()
     cur = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
     #username = session.get('username')
     print("THE USERNAME IN GET_ALL_GAMES IS",username)
-    sql = cur.mogrify("SELECT name,console from game where username = %s",(username,))
+    sql = cur.mogrify(f"SELECT name,console from game where username = %s ORDER BY {sort}",(username,))
+    print(sql)
     cur.execute(sql)
     rows = cur.fetchall()
     cur.close()

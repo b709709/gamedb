@@ -26,8 +26,8 @@
         <div class="game-list">
 
             <div class="game-row-header">
-                <div>Game Name</div>
-                <div>Console</div>
+                <div><a href="/dashboard?sort=name">Game</a></div>
+                <div><a href="/dashboard?sort=console">Console</a></div>
                 <div class="actions-header">
                     <span class="add-icon" data-bs-toggle="modal" data-bs-target="#addModal">+</span>
                 </div>
@@ -80,6 +80,17 @@
     
     <script src="{{ url_for('static',filename='js/bootstrap.bundle.min.js')}}"></script>
     <script>
+        const addModal = document.getElementById('addModal');
+
+        addModal.addEventListener('shown.bs.modal', () => {
+            document.getElementById('new-name').value = '';
+            document.getElementById('new-console').value = '';
+        });
+        addModal.addEventListener('shown.bs.modal', () => {
+            document.getElementById('new-name').focus();
+        });
+
+
         function openAddModal(){
            document.getElementById("add-modal").style.display = "flex"; 
         }
@@ -106,8 +117,10 @@
         // Close Bootstrap modal
         const modalEl = document.getElementById('addModal');
         const modal = bootstrap.Modal.getInstance(modalEl);
+        
         modal.hide();
-    };
+    } 
+
     </script>
     <script>
     function addGameToGrid(game) {
