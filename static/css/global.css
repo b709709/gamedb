@@ -3,3 +3,31 @@ padding-right:20px;
 background:#d0d0d0;
 }
 #loginbox { min-width:300px; }
+
+.game-list {
+  max-height: 400px;      /* controls scroll height */
+  overflow-y: auto;       /* enables vertical scrolling */
+  border: 1px solid #ccc;
+  padding: 10px;
+  border-radius: 6px;
+  background: #f9f9f9;
+}
+
+.game-row {
+  display: flex;          /* makes columns sit side-by-side */
+  justify-content: space-between;
+  padding: 8px 0;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.game-row:last-child {
+  border-bottom: none;
+}
+
+.game-name {
+  font-weight: bold;
+}
+
+.game-console {
+  color: #555;
+}

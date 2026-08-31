@@ -1,4 +1,4 @@
-import psycopg2
+import psycopg2.extras
 
 def get_connection():
     return psycopg2.connect(
@@ -11,8 +11,8 @@ def get_connection():
 
 def get_all_games():
     conn = get_connection()
-    cur = conn.cursor()
-    cur.execute("SELECT name FROM game;")
+    cur = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
+    cur.execute("SELECT name,console FROM game;")
     rows = cur.fetchall()
     cur.close()
     conn.close()

@@ -1,4 +1,8 @@
 <html>
+    <head>
+        <link rel="stylesheet" href="{{ url_for('static',filename='css/bootstrap.min.css')}}">
+        <link rel="stylesheet" href="{{ url_for('static',filename='css/global.css')}}">
+    </head>
     <body>
         <h1>main dashboard</h1>
         {% with messages = get_flashed_messages(with_categories=true) %}
@@ -13,9 +17,19 @@
 
         <ul>
         {% for game in games %}
-            <li>{{ game[0] }}</li>
+            <li>{{ game[0] }} - {{ game[1] }}</li>
         {% endfor %}
         </ul>
 
+        <div class="game-list">
+        {% for game in games %}
+            <div class="game-row">
+            <div class="game-name">{{ game.name }}</div>
+            <div class="game-console">{{ game.console }}</div>
+            </div>
+        {% endfor %}
+        </div>
+
+    <script src="{{ url_for('static',filename='js/bootstrap.bundle.min.js')}}"></script>
     </body>
 </html>
