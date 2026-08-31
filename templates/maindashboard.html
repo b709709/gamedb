@@ -8,10 +8,12 @@
         <h1>My Games Dashboard</h1>
         {% with messages = get_flashed_messages(with_categories=true) %}
             {% if messages %}
+                <div class="dash-right">
                 {% for category, message in messages %}
                 <div class="dash-user">{{ message }}</div>
                 <a href="/logout" class="btn btn-danger btn-sm">Logout</a>
                 {% endfor %}
+                </div>
             {% endif %}
         {% endwith %}
         </div>
@@ -26,10 +28,10 @@
         <div class="game-list">
 
             <div class="game-row-header">
-                <div><a href="/dashboard?sort=name">Game</a></div>
-                <div><a href="/dashboard?sort=console">Console</a></div>
+                <div><a title="Sort By Game" href="/dashboard?sort=name">Game</a></div>
+                <div><a title="Sort By Console" href="/dashboard?sort=console">Console</a></div>
                 <div class="actions-header">
-                    <span class="add-icon" data-bs-toggle="modal" data-bs-target="#addModal">+</span>
+                    <span title="Add New Record" class="add-icon" data-bs-toggle="modal" data-bs-target="#addModal">➕</span>
                 </div>
             </div>
             
@@ -39,8 +41,8 @@
             <div class="game-console">{{ game.console }}</div>
 
             <div class="actions">
-                    <span class="edit-icon" onclick="window.location='/edit/{{ game.id }}'">✏️</span>
-                    <span class="delete-icon" onclick="window.location='/delete/{{ game.id }}'">🗑️</span>
+                    <span title="Edit Current Record" class="edit-icon" onclick="window.location='/edit/{{ game.id }}'">✏️</span>
+                    <span title="Delete Current Record" class="delete-icon" onclick="window.location='/delete/{{ game.id }}'">🗑️</span>
                 </div>
 
             </div>

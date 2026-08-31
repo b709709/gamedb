@@ -4,10 +4,17 @@ background:#d0d0d0;
 }
 #loginbox { min-width:300px; }
 
+.dash-right {
+  display:flex;
+  align-items:center;
+  gap:12px;
+}
 .dash-header {
   display:flex;
   align-items:center;
   border-bottom:2px solid #313131;
+  justify-content:space-between;
+  
 }
 
 .dash-header .dash-user {
@@ -16,7 +23,6 @@ background:#d0d0d0;
 
 .game-row-header {
     display: flex;
-    justify-content: space-between;
     font-weight: bold;
     border-bottom: 2px solid #ccc;
     
@@ -46,8 +52,6 @@ background:#d0d0d0;
 
 .game-row {
   display: flex;          /* makes columns sit side-by-side */
-  xjustify-content: space-between;
-  xpadding: 8px 0;
   border-bottom: 1px solid #313131;
 }
 .game-row div {
