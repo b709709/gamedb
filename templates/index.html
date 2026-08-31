@@ -1,5 +1,6 @@
 <html>
     <head>
+        
         <link rel="stylesheet" href="{{ url_for('static',filename='css/bootstrap.min.css')}}">
         <link rel="stylesheet" href="{{ url_for('static',filename='css/global.css')}}">
     </head>
@@ -14,6 +15,10 @@
                 {% endfor %}
             {% endif %}
             {% endwith %}
+
+            {% if request.args.get('loggedout') %}
+              <div class="alert alert-info">You have been logged out.</div>
+            {% endif %}
 
             <h3 class="mb-3 mt-0">Games Database Login:</h3>
             <form action="/login" method="post">
@@ -32,6 +37,9 @@
             
           </div>
         </div>
-    <script src="{{ url_for('static',filename='js/bootstrap.bundle.min.js')}}"></script>
+    
+    <script src="{{ url_for('static', filename='js/bootstrap.bundle.min.js') }}"></script>
+
+
     </body>
 </html>
