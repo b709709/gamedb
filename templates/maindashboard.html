@@ -8,5 +8,14 @@
                 {% endfor %}
             {% endif %}
         {% endwith %}
+
+        <h2>Your Games</h2>
+
+        <ul>
+        {% for game in games %}
+            <li>{{ game[0] }}</li>
+        {% endfor %}
+        </ul>
+
     </body>
 </html>

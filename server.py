@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request, jsonify
 from flask import Flask, redirect, url_for, flash, session
 from services.auth import process_login
+from services.db import get_all_games
 
 app = Flask(__name__)
 app.secret_key = "709709ab"
@@ -18,12 +19,14 @@ def index():
 
 @app.route("/dashboard")
 def dashboard():
+
     if not session.get("logged_in"):
         flash("You must be logged in first","error")
         return redirect(url_for("index"))
 
+    games = get_all_games()
     flash("Welcome:" + session.get("username"),"success")
-    return render_template("maindashboard.html")
+    return render_template("maindashboard.html",games=games)
 
 @app.route("/login", methods=["POST"])
 def login():
