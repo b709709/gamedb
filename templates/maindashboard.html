@@ -87,5 +87,45 @@
             document.getElementById("add-modal").style.display = "none";
         }
     </script>
+
+    <script>
+    document.getElementById("save-game").onclick = async function() {
+        const name = document.getElementById("new-name").value;
+        const console = document.getElementById("new-console").value;
+
+        const response = await fetch("/api/add", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ name, console })
+        });
+
+        const game = await response.json();
+
+        addGameToGrid(game);
+
+        // Close Bootstrap modal
+        const modalEl = document.getElementById('addModal');
+        const modal = bootstrap.Modal.getInstance(modalEl);
+        modal.hide();
+    };
+    </script>
+    <script>
+    function addGameToGrid(game) {
+        const row = document.createElement("div");
+        row.className = "game-row";
+
+        row.innerHTML = `
+            <div class="game-name">${game.name}</div>
+            <div class="game-console">${game.console}</div>
+            <div class="actions">
+                <span class="edit-icon" onclick="window.location='/edit/${game.id}'">✏️</span>
+                <span class="delete-icon" onclick="window.location='/delete/${game.id}'">🗑️</span>
+            </div>
+        `;
+
+        document.querySelector(".game-list").appendChild(row);
+    }
+    </script>
+
     </body>
 </html>

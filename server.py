@@ -2,9 +2,12 @@ from flask import Flask, render_template, request, jsonify
 from flask import Flask, redirect, url_for, flash, session
 from services.auth import process_login
 from services.db import get_all_games, get_user
+from api.add import api_add_bp
 
 app = Flask(__name__)
 app.secret_key = "709709ab"
+
+app.register_blueprint(api_add_bp)
 
 @app.before_request
 def require_login():
@@ -34,7 +37,7 @@ def dashboard():
 
     print ("get games for",session.get("username"))
 
-    games = get_all_games(session)
+    games = get_all_games(session["username"])
     print("row count",len(games))
 
     flash("Welcome:" + session.get("username"),"success")

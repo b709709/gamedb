@@ -1,6 +1,17 @@
 import psycopg2.extras
 from flask import Flask, redirect, url_for, flash, session
 
+def add_game(name,console,username):
+    conn = get_connection()
+    cur = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
+
+    cur.execute("INSERT INTO game (name,console,username) VALUES(%s, %s, %s) RETURNING id", (name,console,username))
+    row = cur.fetchone()
+    new_id = row["id"]
+    conn.commit()
+    return new_id
+    
+    
 def get_connection():
     return psycopg2.connect(
         dbname="mygames",
@@ -28,10 +39,10 @@ def get_user(username,password):
        print("No user record found.")
        return False
 
-def get_all_games(session):
+def get_all_games(username):
     conn = get_connection()
     cur = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
-    username = session.get('username')
+    #username = session.get('username')
     print("THE USERNAME IN GET_ALL_GAMES IS",username)
     sql = cur.mogrify("SELECT name,console from game where username = %s",(username,))
     cur.execute(sql)
