@@ -63,7 +63,7 @@ def dashboard():
     games = get_all_games(session["username"],sort,searchValue)
     print("row count",len(games))
 
-    flash("Welcome:" + session.get("username"),"success")
+    flash("ID:" + session.get("username"),"success")
     return render_template("maindashboard.html",games=games)
 
 @app.route("/logout")

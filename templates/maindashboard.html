@@ -19,18 +19,22 @@
         {% endwith %}
         </div>
 
-        <div class="d-flex justify-content-between align-items-center mb-3 p-2 bg-light border rounded">
-        <form class="d-flex m-0" method="GET" action="/dashboard">
-            <div class="input-group flex-grow-1" xstyle="max-width:400px;">
-                <span class="input-group-text">Search</span>
-                <input type="text" id="searchInput" name="searchInput" class="form-control" placeholder="Game Name">
-                <button  type="submit" class="btn btn-primary" id="searchButton">Go</button>
-            </div>
-        </form>
-            <div class="d-flex">
+        <!--<div class="d-flex justify-content-between align-items-center mb-3 p-2 bg-light border rounded">-->
+        <div class="d-flex flex-column flex-md-row align-items-start align-items-md-center gap-2 mb-2 p-2 bg-light border rounded">
+
+            <form class="d-flex flex-grow-1 m-0" method="GET" action="/dashboard">
+                <div class="input-group w-100" xstyle="max-width:400px;">
+                    <span class="input-group-text">Search</span>
+                    <input type="text" id="searchInput" name="searchInput" class="form-control" placeholder="Game Name">
+                    <button  type="submit" class="btn btn-primary" id="searchButton">Go</button>
+                </div>
+            </form>
+
+            <div class="d-flex gap-2">
                 <button class="btn btn-primary me-2" data-bs-toggle="modal" data-bs-target="#addModal">➕ Add Game</button>
-                <a href="/dashboard" class="btn btn-secondary" id="resetview">Reset</a>
+                <a href="/dashboard" class="btn btn-secondary" id="resetview">↺ Reset</a>
             </div>
+
         </div>
 
         <!-- <ul>
@@ -157,9 +161,11 @@
         function openAddModal(){
            document.getElementById("add-modal").style.display = "flex"; 
         }
+        /*
         document.getElementById("close-modal").onclick = function() {
             document.getElementById("add-modal").style.display = "none";
         }
+        */
     </script>
 
     <script>
@@ -167,7 +173,7 @@
         const modalEl = document.getElementById('editModal');
         const modal = bootstrap.Modal.getInstance(modalEl);
         const gameid = document.getElementById("save-edit").dataset.gameid;
-        //console.log(gameid);
+        
 
         const name = document.getElementById("edit-name").value;
         const console = document.getElementById("edit-console").value;
@@ -185,6 +191,10 @@
             gridrow = document.getElementById(sgameid);
             gridrow.querySelector(".game-name").textContent = name;
             gridrow.querySelector(".game-console").textContent = console;
+            editicon = gridrow.querySelector(".edit-icon");
+            editicon.dataset.gamename = name;
+            editicon.dataset.gameconsole = console;
+            
             modal.hide();
         }
         else {
