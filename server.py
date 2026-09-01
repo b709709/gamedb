@@ -3,11 +3,16 @@ from flask import Flask, redirect, url_for, flash, session
 from services.auth import process_login
 from services.db import get_all_games, get_user
 from api.add import api_add_bp
+from api.edit import api_edit_bp
+from services.games import delete_game
 
 app = Flask(__name__)
 app.secret_key = "709709ab"
 
+
 app.register_blueprint(api_add_bp)
+app.register_blueprint(api_edit_bp)
+
 
 @app.before_request
 def require_login():
@@ -24,7 +29,21 @@ def require_login():
 @app.route("/")
 def index():
     return render_template("index.html")  # your login page
-    
+
+@app.route("/delete/<int:game_id>")    
+def deleteGame(game_id):
+    isok,errorMsg = delete_game(game_id)
+    if not isok:
+       print(errorMsg)
+
+    if isok == True:
+        return redirect("/dashboard")
+    else:
+        return redirect("/dashboard")
+
+
+
+
 @app.route("/dashboard")
 def dashboard():
 
@@ -54,9 +73,13 @@ def logout():
 def login():
     username = request.form.get("username")
     password = request.form.get("password")
+    action = request.form.get("action")
+    print("login action",action)
+
+    returnmessage = ""
 
     #ok = process_login(username,password)
-    ok = get_user(username,password)
+    ok,returnmessage = get_user(username,password,action)
     
 
     if ok:
@@ -65,7 +88,7 @@ def login():
         return redirect(url_for("dashboard"))
     else:
         flash("login failed. Please try again.","error")
-        flash("unknown user","error")
+        flash(returnmessage,"error")
         return redirect(url_for("index"))
     
         # Example: return JSON
