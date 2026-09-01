@@ -47,6 +47,9 @@ def deleteGame(game_id):
 @app.route("/dashboard")
 def dashboard():
 
+    searchValue = request.args.get("searchInput","").strip()
+    print("search value",searchValue)
+
     if 'username' not in session:
         return redirect('/login')
     
@@ -57,7 +60,7 @@ def dashboard():
     print ("get games for",session.get("username"))
 
     sort = request.args.get("sort","name")
-    games = get_all_games(session["username"],sort)
+    games = get_all_games(session["username"],sort,searchValue)
     print("row count",len(games))
 
     flash("Welcome:" + session.get("username"),"success")

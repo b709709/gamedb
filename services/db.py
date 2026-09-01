@@ -64,13 +64,23 @@ def get_user(username,password,action):
     else:
        return False,"No user found, retry or Signup."
 
-def get_all_games(username,sort):
-    
+def get_all_games(username,sort,searchvalue):
+
+    print("search value in get_all_games=",searchvalue)
+
     conn = get_connection()
     cur = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
     #username = session.get('username')
     print("THE USERNAME IN GET_ALL_GAMES IS",username)
-    sql = cur.mogrify(f"SELECT name,console,id from game where username = %s ORDER BY {sort}",(username,))
+    
+    sql = ""
+
+    if searchvalue:
+        searchvalue = "%" + searchvalue + "%"
+        sql = cur.mogrify(f"SELECT name,console,id from game where username = %s AND name ILIKE %s",(username,searchvalue)) 
+    else:
+        sql = cur.mogrify(f"SELECT name,console,id from game where username = %s ORDER BY {sort}",(username,)) 
+    
     print(sql)
     cur.execute(sql)
     rows = cur.fetchall()

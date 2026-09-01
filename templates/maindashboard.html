@@ -1,5 +1,6 @@
 <html>
     <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1">  
         <link rel="stylesheet" href="{{ url_for('static',filename='css/bootstrap.min.css')}}">
         <link rel="stylesheet" href="{{ url_for('static',filename='css/global.css')}}">
     </head>
@@ -18,15 +19,20 @@
         {% endwith %}
         </div>
 
-            
-        <div class="justify-content-between align-items-center mb-3 p-2 bg-light border rounded">
-            <div class="input-group" style="max-width:400px;">
+        <div class="d-flex justify-content-between align-items-center mb-3 p-2 bg-light border rounded">
+        <form class="d-flex m-0" method="GET" action="/dashboard">
+            <div class="input-group flex-grow-1" xstyle="max-width:400px;">
                 <span class="input-group-text">Search</span>
-                <input type="text" id="searchInput" class="form-control" placeholder="Game Name">
-                <button  class="btn btn-primary" id="searchButton">Go</button>
+                <input type="text" id="searchInput" name="searchInput" class="form-control" placeholder="Game Name">
+                <button  type="submit" class="btn btn-primary" id="searchButton">Go</button>
+            </div>
+        </form>
+            <div class="d-flex">
+                <button class="btn btn-primary me-2" data-bs-toggle="modal" data-bs-target="#addModal">➕ Add Game</button>
+                <a href="/dashboard" class="btn btn-secondary" id="resetview">Reset</a>
             </div>
         </div>
-        
+
         <!-- <ul>
         {% for game in games %}
             <li>{{ game[0] }} - {{ game[1] }}</li>
