@@ -43,7 +43,7 @@ def get_user(username,password,action):
         return False,"User Already Exists, Please try again."
     if action == "signup" and len(rows) == 0 and password == "":
         return False,"Password cannot be blank."
-    if action == "signup" and len(rows) == 0 and password != "":
+    if action == "signup" and len(rows) == 0 and password != "" and username != "":
         conn = get_connection()
         cur = conn.cursor(cursor_factory=psycopg2.extras.DictCursor) 
         cur.execute("INSERT INTO users (username,password) VALUES(%s, %s) RETURNING id", (username,password))
@@ -64,9 +64,9 @@ def get_user(username,password,action):
     else:
        return False,"No user found, retry or Signup."
 
-def get_all_games(username,sort,searchvalue):
+def get_all_games(username,sort,searchvalue,searchconsole):
 
-    print("search value in get_all_games=",searchvalue)
+    print("search value in get_all_games=",searchvalue,searchconsole)
 
     conn = get_connection()
     cur = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
@@ -75,10 +75,35 @@ def get_all_games(username,sort,searchvalue):
     
     sql = ""
 
-    if searchvalue:
-        searchvalue = "%" + searchvalue + "%"
+    xchoice = 0
+    if searchvalue and not searchconsole:
+       xchoice = 1
+    if not searchvalue and searchconsole:
+       xchoice = 2
+    if not searchvalue and not searchconsole:
+       xchoice = 3
+    if searchvalue and searchconsole:
+       xchoice = 4
+
+    if xchoice == 1:
+        print("SEARCH VALUE PATH IS SELECTED")
+        searchvalue = searchvalue.replace("*","%")
+        #searchvalue = "%" + searchvalue + "%"
         sql = cur.mogrify(f"SELECT name,console,id from game where username = %s AND name ILIKE %s",(username,searchvalue)) 
-    else:
+    elif xchoice == 4:
+        print("SEARCH VALUE AND SEARCHCONSOLE PATH IS SELECTED")
+        searchvalue = searchvalue.replace("*","%")
+        #searchvalue = "%" + searchvalue + "%"
+        searchconsole = searchconsole.replace("*","%")
+        #searchconsole = "%" + searchconsole + "%"
+        sql = cur.mogrify(f"SELECT name,console,id from game where username = %s AND name ILIKE %s and console ILIKE %s",(username,searchvalue,searchconsole)) 
+    elif xchoice == 2:
+        print("SEARCHCONSOLE PATH IS SELECTED")    
+        searchconsole = searchconsole.replace("*","%")
+        #searchconsole = "%" + searchconsole + "%"
+        sql = cur.mogrify(f"SELECT name,console,id from game where username = %s AND console ILIKE %s",(username,searchconsole))
+    else: #not searchconsole and searchvalue empty refresh xchoice = 3 or 0
+        print("STANDARD PATH IS SELECTED")
         sql = cur.mogrify(f"SELECT name,console,id from game where username = %s ORDER BY {sort}",(username,)) 
     
     print(sql)

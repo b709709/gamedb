@@ -1,8 +1,8 @@
 from .db import get_connection
 import psycopg2.extras
 
-def edit_game(name,console,gameid):
-    print(name,console,gameid)
+def edit_game(name,console,gameid,username):
+    print(name,console,gameid,username)
     conn = get_connection()
     cur = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
 
